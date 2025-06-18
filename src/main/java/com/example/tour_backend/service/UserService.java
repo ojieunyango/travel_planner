@@ -13,7 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -87,5 +89,21 @@ public class UserService {
                     dto.setModifiedDate(user.getModifiedDate());
                     return dto;
                 });
+    }
+    public List<UserResponseDto> getAllUsers() {
+        List<Users> users = userRepository.findAll();  // DB에서 모든 사용자 조회
+        return users.stream()
+                .map(user -> {
+                    UserResponseDto dto = new UserResponseDto();
+                    dto.setUserid(user.getUserid());
+                    dto.setEmail(user.getEmail());
+                    dto.setName(user.getName());
+                    dto.setPhone(user.getPhone());
+                    dto.setNickname(user.getNickname());
+                    dto.setCreateDate(user.getCreateDate());
+                    dto.setModifiedDate(user.getModifiedDate());
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 }

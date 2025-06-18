@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.tour_backend.service.UserService;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/users")
@@ -39,6 +41,12 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.status(401).body("로그인 실패: " + e.getMessage());
         }
+        }
+        @GetMapping
+        public ResponseEntity<List<UserResponseDto>> getAllUsers() {
+            List<UserResponseDto> users = userService.getAllUsers(); // 이건 서비스에서 구현되어 있어야 함
+            return ResponseEntity.ok(users);
+        }
+
 
     }
-}
