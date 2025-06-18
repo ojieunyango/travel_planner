@@ -42,7 +42,7 @@ public class UserController {
             return ResponseEntity.status(401).body("로그인 실패: " + e.getMessage());
         }
         }
-        @GetMapping
+        @GetMapping  // 모든 사용자 조회
         public ResponseEntity<List<UserResponseDto>> getAllUsers() {
             List<UserResponseDto> users = userService.getAllUsers(); // 이건 서비스에서 구현되어 있어야 함
             return ResponseEntity.ok(users);

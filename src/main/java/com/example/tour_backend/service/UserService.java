@@ -50,10 +50,14 @@ public class UserService {
         if (userRepository.findByNickname(requestDto.getNickname()).isPresent()) {
             throw new RuntimeException("이미 존재하는 닉네임입니다.");
         }
+        if (userRepository.findByUsername(requestDto.getUsername()).isPresent()) {
+            throw new RuntimeException("이미 존재하는 사용자명입니다.");
+        }
         // 비밀번호 암호화해서 저장
         String encodedPassword = passwordEncoder.encode(requestDto.getPassword());
 
         Users user = Users.builder()
+                .username(requestDto.getUsername())
                 .email(requestDto.getEmail())
                 .password(encodedPassword) // 나중에 암호화 필요
                 .name(requestDto.getName())
